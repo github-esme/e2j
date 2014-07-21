@@ -1,3 +1,5 @@
+This version can be run on JRE 1.6, modified by ravinow
+
 e2j is an unpacker for jars packed via Jar2Exe hidden mode
 written by veer
 
