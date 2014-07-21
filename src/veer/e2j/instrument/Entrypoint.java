@@ -5,22 +5,11 @@ import veer.e2j.collect.Constraint;
 
 import java.lang.instrument.Instrumentation;
 
-import java.io.IOException;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Entrypoint {
 
   public static void premain(String options, Instrumentation instr) {
-    Path output;
-    try {
-        output = (options == null || options.isEmpty())
-            ? Files.createTempFile(pwd(), "e2j-", ".dump.jar") : Paths.get(options);
-    } catch (IOException ex) {
-      throw new RuntimeException(ex);
-    }
+    String output = (options == null || options.isEmpty())
+            ? "e2j-dump.jar" : options;
 
     ClassCollector collector = new ClassCollector(output, new Constraint() {
 
@@ -38,9 +27,5 @@ public class Entrypoint {
     });
     collector.prepare();
     collector.attach(instr);
-  }
-
-  private static Path pwd() {
-    return Paths.get(".");
   }
 }
